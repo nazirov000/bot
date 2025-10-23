@@ -19,9 +19,16 @@ from telegram.ext import (
 from telegram.request import HTTPXRequest
 
 # --- TOKEN ---
-BOT_TOKEN = os.getenv("7906977951:AAE7Z1T5CeUlbRf9si1-PxIPrR1QREbvq-M")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+# fallback: if running locally you can place your token in a file named `token.txt`
 if not BOT_TOKEN:
-    raise ValueError("❌ BOT_TOKEN environment variable is not set!")
+    try:
+        with open("token.txt", "r", encoding="utf-8") as f:
+            BOT_TOKEN = f.read().strip()
+    except Exception:
+        pass
+if not BOT_TOKEN:
+    raise ValueError("❌ BOT_TOKEN environment variable is not set! Set BOT_TOKEN or put the token in token.txt for local testing.")
 
 # --- URL saqlash uchun dict ---
 USER_URLS = {}
